@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CH - Custom Hoodies</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+}
+header {
+  background: black;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+nav {
+  text-align: center;
+  margin: 20px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+section {
+  display: none;
+  padding: 20px;
+}
+.active {
+  display: block;
+}
+.hoodie {
+  width: 250px;
+  height: 300px;
+  background: black;
+  margin: 20px auto;
+  position: relative;
+}
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.card {
+  background: white;
+  padding: 10px;
+  margin: 10px auto;
+  max-width: 300px;
+  border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<header>CH</header>
+
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('customizer')">Customize Hoodie</button>
+</nav>
+
+<!-- HOME PAGE -->
+<section id="home" class="active">
+  <h2>Welcome to CH</h2>
+  <p>Customize hoodies, upload your ideas for $5/month, and earn game money!</p>
+
+  <div class="card">
+    <h3>Most Viewed Hoodie</h3>
+    <p>Views: 124</p>
+    <p>Price: $100</p>
+  </div>
+
+  <div class="card">
+    <h3>Most Bought Hoodie</h3>
+    <p>Bought: 32 times</p>
+    <p>Price: $100</p>
+  </div>
+
+  <h3>Community Designs</h3>
+  <div class="card">
+    <p>Design by User123</p>
+    <p>Views: 40 | Bought: 5</p>
+  </div>
+</section>
+
+<!-- CUSTOMIZER PAGE -->
+<section id="customizer">
+  <h2>Customize Your Hoodie</h2>
+  <p>Hoodie Price: $100 (Game Money)</p>
+  <p>Upload Subscription: $5 / month (Game Money)</p>
+
+  <div class="hoodie">
+    <canvas id="canvas" width="250" height="300"></canvas>
+  </div>
+
+  <input type="text" id="textInput" placeholder="Type letters only">
+  <button onclick="addText()">Add Text</button>
+  <br><br>
+
+  <input type="file" accept="image/*" onchange="uploadImage(event)">
+  <br><br>
+
+  <button onclick="saveDesign()">Upload Design</button>
+</section>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+}
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+// Draw text (letters only)
+function addText() {
+  const text = document.getElementById("textInput").value;
+  if (!/^[a-zA-Z ]+$/.test(text)) {
+    alert("Letters only!");
+    return;
+  }
+  ctx.fillStyle = "white";
+  ctx.font = "24px Arial";
+  ctx.fillText(text, 20, 150);
+}
+
+// Upload image
+function uploadImage(event) {
+  const img = new Image();
+  img.onload = function () {
+    ctx.drawImage(img, 50, 80, 150, 150);
+  };
+  img.src = URL.createObjectURL(event.target.files[0]);
+}
+
+// Save design
+function saveDesign() {
+  alert("Design uploaded! $5 monthly game money charged.");
+}
+</script>
+
+</body>
+</html>
